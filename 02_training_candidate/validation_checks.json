@@ -1,0 +1,17 @@
+{
+  "training_examples": 1430,
+  "split_counts": {
+    "train": 819,
+    "validation": 176,
+    "test": 435
+  },
+  "checked_source_links": 7150,
+  "checks_passed": [
+    "Every feature and target source ID resolves to an exact reviewed value",
+    "Station, parameter and calendar offset match for every linked cell",
+    "All linked numeric values equal the cleaned source values",
+    "Combined file and disjoint splits reconcile exactly",
+    "Predictor list excludes target and metadata"
+  ],
+  "model_trained": false
+}

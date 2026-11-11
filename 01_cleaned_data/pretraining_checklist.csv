@@ -1,0 +1,7 @@
+﻿step,action,completion_evidence,status
+1,"Explore distributions, missingness and station histories",Reviewed CSVs and coverage report available; run the R exploration script and inspect plots,Next
+2,Define thesis output and monthly prediction horizon,"Written target, unit, population and horizon; agree how this supports the original platform objectives",Required before training
+3,Establish what inputs exist at prediction time,Sampling/publication timing and deployment data source documented; retrospective use stated if timing cannot be recovered,Required before prospective forecasting
+4,Prepare lags and chronological validation,Lag windows do not cross missing calendar months; same calendar holdout for all stations; transformations fit on training data only,Required before training
+5,Check reporting changes and remaining source uncertainty,"Sensitivity to rounded DO values, station expansion, censored BOD and one excluded digit recorded; optional independent transcription review",Required in methodology
+6,Train and compare baseline models,Persistence and seasonal baselines compared with simple regression and a tree model; MAE/RMSE and station/year breakdowns reported,After steps 1 to 5

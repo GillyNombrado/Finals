@@ -1,0 +1,12 @@
+﻿dataset,rows,original_columns,clean_columns,duplicate_full_rows,source_sha256,readiness
+annual_overview,5,7,10,0,86e218901e788fd68efc87f3589e11ec18950abf7458836b91bdd875ae857f26,Structural cleaning complete; source values remain secondary and require task-specific review
+bay_flood_history,5,14,18,0,34e993b4ed67a3c4271fbf0b69f4302e3d98b78d0835b92fe6add1c398dda346,Structural cleaning complete; source values remain secondary and require task-specific review
+data_access,13,10,13,0,a3581cd31067ca147cee1ebb5e245c2d9d4043946ca801e5f6d6f97f2258797b,Structural cleaning complete; source values remain secondary and require task-specific review
+fish_kill_events,9,18,26,0,80de435897e403c75ac6b7d14e778feed02823b8665e7042388b5b8ee5356b07,Structural cleaning complete; source values remain secondary and require task-specific review
+gate_operating_rules,11,12,16,0,e8251444d2484c6ae76c3f53633c7c1d5c83524ec11f612f90ce00a484e12827,Structural cleaning complete; source values remain secondary and require task-specific review
+lake_baseline,12,7,10,0,b8f81c4a8778cf7846215794c06c74228ce5b4df55701a24c094e33586dc2ba3,Structural cleaning complete; source values remain secondary and require task-specific review
+lake_monthly,60,13,17,0,113a22101e1ec81978c72aae5fccc2d4322ea74a53186f550461e66a1c500f68,Structural cleaning complete; source values remain secondary and require task-specific review
+lake_spot,10,9,13,0,68f595e9c48bc0fad2a99afe5150985230a94837c6fa0038cff44ecbcacf2be5,Structural cleaning complete; source values remain secondary and require task-specific review
+monitoring_assets,26,10,13,0,6b5aecdf3eb794afa81d7f9996726d9ddeee0f4569c6e38cc63dd10bddb9daa1,Structural cleaning complete; source values remain secondary and require task-specific review
+sources,27,7,10,0,e03a9f847d963079fb42a5e5e8b23ac404fde9c65458a4e17af5d840758d9feb,Structural cleaning complete; source values remain secondary and require task-specific review
+water_quality_cases,8,12,16,0,d1790696ae588beb14446f5d64c5df9bc6f23c26c9d17e0319a555f8b58dac48,Structural cleaning complete; source values remain secondary and require task-specific review

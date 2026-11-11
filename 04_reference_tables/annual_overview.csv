@@ -1,0 +1,6 @@
+﻿year,mean_lake_level_m,lowest_monthly_mean_m,highest_monthly_mean_m,annual_basin_rainfall_mm,monthly_level_records,lake_level_source_url,source_file,source_csv_row,source_review_status
+2020,11.3192,10.7,12.65,,12,https://llda.gov.ph/wp-content/uploads/dox/ar/ar20.pdf,annual_overview.csv,2,secondary_compilation_not_independently_verified
+2021,11.6725,10.96,12.49,,12,https://llda.gov.ph/wp-content/uploads/dox/ar/ar21.pdf,annual_overview.csv,3,secondary_compilation_not_independently_verified
+2022,11.5192,10.98,12.59,2764.9,12,https://llda.gov.ph/wp-content/uploads/dox/ar/ar22.v7.pdf,annual_overview.csv,4,secondary_compilation_not_independently_verified
+2023,11.5592,11.0,12.15,2456.3,12,https://llda.gov.ph/wp-content/uploads/dox/ar/ar2023-Final_final.pdf,annual_overview.csv,5,secondary_compilation_not_independently_verified
+2024,11.565,10.74,12.55,2868.0,12,https://fliphtml5.com/xwich/bstb/BUO_NA/,annual_overview.csv,6,secondary_compilation_not_independently_verified

@@ -1,0 +1,4 @@
+﻿proposed_split,examples,first_target_month,last_target_month,stations
+train,819,2013-04,2022-12,15
+validation,176,2023-01,2023-12,15
+test,435,2024-01,2026-06,16

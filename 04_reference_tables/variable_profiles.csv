@@ -1,0 +1,120 @@
+﻿dataset,variable,type,rows,missing_count,distinct_nonmissing,minimum,maximum,example
+annual_overview,year,numeric,5,0,5,2020.0,2024.0,2020
+annual_overview,mean_lake_level_m,numeric,5,0,5,11.3192,11.6725,11.3192
+annual_overview,lowest_monthly_mean_m,numeric,5,0,5,10.7,11.0,10.7
+annual_overview,highest_monthly_mean_m,numeric,5,0,5,12.15,12.65,12.65
+annual_overview,annual_basin_rainfall_mm,numeric,5,2,3,2456.3,2868.0,2764.9
+annual_overview,monthly_level_records,numeric,5,0,1,12.0,12.0,12
+annual_overview,lake_level_source_url,character,5,0,5,,,https://llda.gov.ph/wp-content/uploads/dox/ar/ar20.pdf
+bay_flood_history,event_id,character,5,0,5,,,BF-2022-01
+bay_flood_history,source_report_year,numeric,5,0,5,2022.0,2026.0,2022
+bay_flood_history,event_date_or_period,character,5,0,5,,,2022-10 to 2022-11
+bay_flood_history,named_event,character,5,0,4,,,Late-October 2022 major flooding
+bay_flood_history,bay_laguna_location,character,5,0,4,,,Municipality of Bay: all barangays except Bitin and Sta. Cruz
+bay_flood_history,affected_families,numeric,5,3,2,4.0,61.0,61
+bay_flood_history,affected_persons,numeric,5,3,2,10.0,218.0,218
+bay_flood_history,agri_fisheries_damage_php,numeric,5,4,1,32012302.0,32012302.0,32012302
+bay_flood_history,infrastructure_damage_php,numeric,5,3,2,0.0,30000000.0,30000000
+bay_flood_history,other_cost_php,numeric,5,4,1,500000.0,500000.0,500000
+bay_flood_history,flood_depth_inches,numeric,5,4,1,12.0,12.0,12
+bay_flood_history,livelihood_or_infrastructure_impact,character,5,0,5,,,"Agriculture and fisheries damage; riprap wall Brgy. Maitim, river retaining wall Brgy. Puypuy; roads blocked including Sitio Mariang Bukid as of 29 Nov; power unavailable from 29–31 Oct."
+bay_flood_history,confidence_and_conflicts,character,5,0,5,,,"Bay CDP excerpt public search indexing; damage PHP amounts as reported, not separated by crop/fishery."
+bay_flood_history,source_url,character,5,0,3,,,https://bay.gov.ph/wp-content/uploads/2026/02/CDP-LDIP-EP-2026-2031-BAY.pdf
+data_access,access_id,character,13,0,13,,,DA-01
+data_access,requested_dataset,character,13,0,13,,,LLGS South Bay water-level sensor original stream
+data_access,priority_for_bay,character,13,0,8,,,"CRITICAL (station is within Bay, Brgy. San Antonio)"
+data_access,custodian,character,13,0,11,,,LLDA PDMED
+data_access,available_date_span,character,13,0,13,,,2021-01 through 2024-12 at least
+data_access,granularity,character,13,0,13,,,5-minute native / hourly requested
+data_access,public_access_status_as_of_2026_10_27,character,13,0,13,,,"FOI SUCCESSFUL Sep 2026 but Excel provided directly to prior requester by email, NOT posted"
+data_access,data_in_workbook,character,13,0,12,,,NO - only annual-report monthly aggregates
+data_access,next_data_action,character,13,0,13,,,"Request the hourly 2021–2024 CSV/Excel, station zero, vertical datum and missingness metadata from LLDA; cite existing successful ticket #DENRLLDA-848011755825"
+data_access,source_or_foi_url,character,13,0,11,,,https://www.foi.gov.ph/agencies/denrllda/request-for-hourly-laguna-de-bay-water-level-data-and-station-reference-information-llgs-south-bay-jan-2021-dec-2024/
+fish_kill_events,event_id,character,9,0,9,,,FK-1972-01
+fish_kill_events,onset_or_period_start,character,9,0,9,,,1972-05
+fish_kill_events,period_end,character,9,5,4,,,1973-08
+fish_kill_events,report_date,character,9,3,5,,,2019-06-10
+fish_kill_events,location,character,9,0,9,,,"Looc, Cardona, Rizal"
+fish_kill_events,location_scope,character,9,0,5,,,Laguna de Bay - Central Bay
+fish_kill_events,fish_or_species,character,9,0,8,,,Milkfish (bangus)
+fish_kill_events,estimated_dead_count,numeric,9,6,3,20000.0,5000000.0,20000
+fish_kill_events,dead_biomass_kg,numeric,9,7,2,2120.0,20000.0,2120
+fish_kill_events,economic_loss_php,numeric,9,7,2,700000.0,2800000.0,2800000
+fish_kill_events,fish_cages_affected,numeric,9,8,1,30.0,30.0,30
+fish_kill_events,area_affected_ha,numeric,9,7,2,7.0,996.0,996
+fish_kill_events,mortality_fraction,character,9,7,2,,,0.9
+fish_kill_events,reported_cause_or_hypothesis,character,9,0,9,,,Peak Microcystis algal bloom (reported association)
+fish_kill_events,verification_quality,character,9,0,9,,,"Scientific secondary synthesis; >20,000 fish (stored minimum only)"
+fish_kill_events,counting_or_date_caution,character,9,0,9,,,"Reported MORE THAN 20,000; numeric 20000 is lower bound, not exact."
+fish_kill_events,primary_source_url,character,9,0,6,,,https://www.fao.org/4/ac009e/ac009e01.htm
+fish_kill_events,secondary_source_url,character,9,7,2,,,https://ani.seafdec.org.ph/handle/20.500.12174/8892
+gate_operating_rules,control_id,character,11,0,11,,,GR-01
+gate_operating_rules,structure,character,11,0,3,,,Rosario Weir
+gate_operating_rules,regime_type,character,11,0,5,,,Precaution
+gate_operating_rules,stage_or_condition,character,11,0,11,,,Sto. Niño >13.0m AND basin average rain >30mm; OR Montalban >22.4m
+gate_operating_rules,station_and_river,character,11,0,4,,,"Sto. Niño / Montalban, MARIKINA RIVER"
+gate_operating_rules,threshold_m,numeric,11,1,10,10.5,15.3,13.0
+gate_operating_rules,gates_total_open,numeric,11,3,6,0.0,8.0,0
+gate_operating_rules,gates_changed,character,11,2,9,,,none
+gate_operating_rules,protocol_note,character,11,0,11,,,"Siren/public warning, gates typically remain closed"
+gate_operating_rules,document_effective_as_of,character,11,0,4,,,2012 rule documented JICA 2016
+gate_operating_rules,verification_status,character,11,0,5,,,Historical operating RULE; not actual gate-status record
+gate_operating_rules,source_url,character,11,0,3,,,https://openjicareport.jica.go.jp/pdf/12260451_01.pdf
+lake_baseline,month,numeric,12,0,12,1.0,12.0,1
+lake_baseline,month_name,character,12,0,12,,,Jan
+lake_baseline,lake_level_m_2000_2023_avg,numeric,12,0,12,10.82,12.06,11.68
+lake_baseline,rainfall_mm_1985_2023_avg,numeric,12,0,12,178.8,249.5,198.0
+lake_baseline,lake_baseline_period,character,12,0,1,,,2000–2023
+lake_baseline,rainfall_baseline_period,character,12,0,1,,,1985–2023
+lake_baseline,source_url,character,12,0,1,,,https://fliphtml5.com/xwich/bstb/BUO_NA/
+lake_monthly,year,numeric,60,0,5,2020.0,2024.0,2020
+lake_monthly,month,numeric,60,0,12,1.0,12.0,1
+lake_monthly,month_name,character,60,0,12,,,Jan
+lake_monthly,lake_level_mean_m,numeric,60,0,52,10.7,12.65,11.2
+lake_monthly,lake_surface_area_m2,numeric,60,8,47,848794000.0,950419000.0,875046000
+lake_monthly,lake_volume_est_m3,numeric,60,8,47,2233220400.0,3954094000.0,2629726000
+lake_monthly,rainfall_basin_average_mm,numeric,60,24,36,2.4,565.0,53.1
+lake_monthly,measurement_scope,character,60,0,1,,,Laguna de Bay lake-wide monthly aggregate (not Bay-only gauge)
+lake_monthly,data_status,character,60,0,1,,,Published actual monthly mean; bathymetric volume/area model
+lake_monthly,lake_level_source,character,60,0,5,,,https://llda.gov.ph/wp-content/uploads/dox/ar/ar20.pdf
+lake_monthly,area_volume_source,character,60,0,5,,,https://llda.gov.ph/wp-content/uploads/dox/ar/ar20.pdf
+lake_monthly,rainfall_source,character,60,24,2,,,https://llda.gov.ph/wp-content/uploads/dox/ar/ar2023-Final_final.pdf
+lake_monthly,quality_note,character,60,28,3,,,2020 lake surface area and volume provided only for source-verifiable months; blank is not zero.
+lake_spot,observation_id,character,10,0,10,,,SP-2020-01
+lake_spot,date,character,10,0,10,,,2020-05-12
+lake_spot,time_local_pht,character,10,7,2,,,10:00
+lake_spot,station_or_area,character,10,0,3,,,Laguna de Bay LLDA monitoring
+lake_spot,lake_level_m,numeric,10,0,7,10.68,12.97,10.68
+lake_spot,datum_status,character,10,0,3,,,Refer to LLDA station datum
+lake_spot,quality_or_method,character,10,0,7,,,Lowest level reported May 12 and 13 2020
+lake_spot,source_url,character,10,0,5,,,https://llda.gov.ph/wp-content/uploads/dox/ar/ar20.pdf
+lake_spot,notes,character,10,0,9,,,Same minimum on two days; report did not identify which specific station here.
+monitoring_assets,asset_id,character,26,0,26,,,AS-01
+monitoring_assets,name,character,26,0,25,,,LLGS South Bay
+monitoring_assets,asset_type,character,26,0,8,,,Lake-level gauging station
+monitoring_assets,location,character,26,0,26,,,"Brgy. San Antonio, Bay, Laguna"
+monitoring_assets,operator,character,26,0,5,,,LLDA
+monitoring_assets,network_or_basin,character,26,0,17,,,Laguna de Bay - South Bay
+monitoring_assets,capacity_or_frequency,character,26,0,9,,,Sensor collection at 5-minute intervals (per 2017–22 milestone)
+monitoring_assets,status_or_start,character,26,0,8,,,Commissioned September 2020
+monitoring_assets,operational_relevance,character,26,0,10,,,PRIMARY municipality-located lake level station; 2021–24 hourly archive provided privately to prior FOI requester
+monitoring_assets,source_url,character,26,0,5,,,https://llda.gov.ph/wp-content/uploads/dox/milestones/Milestone%20Report%20-%202017-2022.pdf
+sources,source_id,character,27,0,27,,,llda2020
+sources,publisher_or_holder,character,27,0,8,,,LLDA
+sources,type,character,27,0,3,,,official report
+sources,coverage,character,27,0,1,,,as stated on source
+sources,status,character,27,0,3,,,"Web-indexed, direct PDF may return 403"
+sources,source_url,character,27,0,27,,,https://llda.gov.ph/wp-content/uploads/dox/ar/ar20.pdf
+sources,research_comment,character,27,0,1,,,Numeric observations have source URL again within the relevant data table.
+water_quality_cases,obs_id,character,8,0,8,,,Q-1975-01
+water_quality_cases,date,character,8,0,5,,,1975-07-07
+water_quality_cases,time_pht,character,8,2,5,,,06:00
+water_quality_cases,site,character,8,0,6,,,"Lambak, Cardona fishpen"
+water_quality_cases,variable,character,8,0,2,,,Dissolved oxygen
+water_quality_cases,value_low,numeric,8,0,6,0.0,4.0,0
+water_quality_cases,value_high,numeric,8,0,7,0.0,4.0,0
+water_quality_cases,units,character,8,0,2,,,mg/L
+water_quality_cases,sampling_context,character,8,0,4,,,Inside affected fishpen
+water_quality_cases,linked_fish_event,character,8,0,1,,,FK-1975-01
+water_quality_cases,note,character,8,0,7,,,Severe hypoxia/anoxia; BFAR observations summarized by FAO
+water_quality_cases,source_url,character,8,0,1,,,https://www.fao.org/4/ac009e/ac009e01.htm

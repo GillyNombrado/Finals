@@ -1,0 +1,51 @@
+{
+  "task": "Proposed retrospective one-month-ahead lake dissolved oxygen regression",
+  "status": "Candidate experiment, not a replacement for original thesis objectives or a deployed early-warning model",
+  "unit": "mg/L",
+  "features": [
+    "station_id",
+    "do_t_mg_l",
+    "do_t_minus_1_mg_l",
+    "do_t_minus_2_mg_l",
+    "bod_t_mg_l",
+    "target_month_sin",
+    "target_month_cos"
+  ],
+  "categorical_features": [
+    "station_id"
+  ],
+  "target": "target_do_next_month_mg_l",
+  "metadata_not_features": [
+    "example_id",
+    "origin_month",
+    "target_month",
+    "proposed_split",
+    "do_t_record_id",
+    "do_t_minus_1_record_id",
+    "do_t_minus_2_record_id",
+    "bod_t_record_id",
+    "target_record_id",
+    "station_seen_in_training"
+  ],
+  "input_window": "Exact DO from t-2, t-1 and t, plus exact BOD at t; target DO at t+1",
+  "known_calendar_features": "Sine and cosine of target month number; known without observing the target",
+  "split_rule": "By target month: train through 2022-12; validation during 2023; test from 2024-01 through 2026-06. All stations use the same dates. Proposed boundaries are explicit, not tuned using model results.",
+  "missing_policy": "Complete cases for selected features and target. No zero filling or imputation. Censored BOD is excluded from the primary candidate. DO-only alternative is supplied separately.",
+  "leakage_controls": "Use only listed features. Never use example_id, dates, split labels, record IDs or the target as predictor columns. Fit preprocessing and categorical encoders on training data only. Historical observations across split boundaries are permitted for rolling one-month prediction; target labels stay chronological.",
+  "availability_limitation": "Actual sampling and publication timestamps are unknown. Inputs from quarterly published reports may have become available after the target month. This is an observational retrospective candidate until actual input availability is established.",
+  "evaluation_note": "Full-period EDA is supplied. The test period is temporally held out for model fitting but has not been hidden from descriptive exploration. Spatial and temporal observations are dependent.",
+  "examples": 1430,
+  "do_only_examples": 1558,
+  "source_hash": "6b89e510c85e98faf272b05873ab44368976d78868305e891f70f4d8e938acdf",
+  "checks_passed": [
+    "unique examples",
+    "all selected features and targets populated",
+    "calendar-adjacent targets",
+    "source IDs resolve to exact reviewed cells",
+    "same split for all stations in a month",
+    "chronologically ordered target periods"
+  ],
+  "model_training": "No model trained",
+  "unseen_station_test_examples": 12,
+  "new_station_policy": "Station XXIV has no training-period observations. Fit encoders on training data, handle unseen categories explicitly, and report known-station and new-station test performance separately. station_seen_in_training is reporting metadata, not an authorized predictor."
+}

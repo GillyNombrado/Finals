@@ -1,0 +1,3 @@
+﻿parameter,exact_value_count,mean,std,min,q1,median,q3,max,unit
+bod,1619.0,2.569302038295244,1.3332637703765933,0.5,2.0,2.0,3.0,10.0,mg/L
+dissolved_oxygen,1765.0,7.805694050991501,1.2080853075937035,4.0,7.0,7.8,8.2,18.3,mg/L

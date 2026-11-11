@@ -1,0 +1,13 @@
+﻿month,month_name,lake_level_m_2000_2023_avg,rainfall_mm_1985_2023_avg,lake_baseline_period,rainfall_baseline_period,source_url,source_file,source_csv_row,source_review_status
+1,Jan,11.68,198.0,2000–2023,1985–2023,https://fliphtml5.com/xwich/bstb/BUO_NA/,lake_baseline.csv,2,secondary_compilation_not_independently_verified
+2,Feb,11.32,192.2,2000–2023,1985–2023,https://fliphtml5.com/xwich/bstb/BUO_NA/,lake_baseline.csv,3,secondary_compilation_not_independently_verified
+3,Mar,11.05,186.9,2000–2023,1985–2023,https://fliphtml5.com/xwich/bstb/BUO_NA/,lake_baseline.csv,4,secondary_compilation_not_independently_verified
+4,Apr,10.85,212.9,2000–2023,1985–2023,https://fliphtml5.com/xwich/bstb/BUO_NA/,lake_baseline.csv,5,secondary_compilation_not_independently_verified
+5,May,10.82,222.2,2000–2023,1985–2023,https://fliphtml5.com/xwich/bstb/BUO_NA/,lake_baseline.csv,6,secondary_compilation_not_independently_verified
+6,Jun,11.01,196.0,2000–2023,1985–2023,https://fliphtml5.com/xwich/bstb/BUO_NA/,lake_baseline.csv,7,secondary_compilation_not_independently_verified
+7,Jul,11.34,178.8,2000–2023,1985–2023,https://fliphtml5.com/xwich/bstb/BUO_NA/,lake_baseline.csv,8,secondary_compilation_not_independently_verified
+8,Aug,11.8,206.4,2000–2023,1985–2023,https://fliphtml5.com/xwich/bstb/BUO_NA/,lake_baseline.csv,9,secondary_compilation_not_independently_verified
+9,Sep,11.98,249.5,2000–2023,1985–2023,https://fliphtml5.com/xwich/bstb/BUO_NA/,lake_baseline.csv,10,secondary_compilation_not_independently_verified
+10,Oct,12.06,215.0,2000–2023,1985–2023,https://fliphtml5.com/xwich/bstb/BUO_NA/,lake_baseline.csv,11,secondary_compilation_not_independently_verified
+11,Nov,12.02,216.9,2000–2023,1985–2023,https://fliphtml5.com/xwich/bstb/BUO_NA/,lake_baseline.csv,12,secondary_compilation_not_independently_verified
+12,Dec,11.92,201.5,2000–2023,1985–2023,https://fliphtml5.com/xwich/bstb/BUO_NA/,lake_baseline.csv,13,secondary_compilation_not_independently_verified

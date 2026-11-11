@@ -1,0 +1,265 @@
+{
+  "stats": [
+    {
+      "parameter": "bod",
+      "exact_value_count": 1619.0,
+      "mean": 2.569302038295244,
+      "std": 1.3332637703765933,
+      "min": 0.5,
+      "q1": 2.0,
+      "median": 2.0,
+      "q3": 3.0,
+      "max": 10.0,
+      "unit": "mg/L"
+    },
+    {
+      "parameter": "dissolved_oxygen",
+      "exact_value_count": 1765.0,
+      "mean": 7.805694050991501,
+      "std": 1.2080853075937035,
+      "min": 4.0,
+      "q1": 7.0,
+      "median": 7.8,
+      "q3": 8.2,
+      "max": 18.3,
+      "unit": "mg/L"
+    }
+  ],
+  "status": [
+    {
+      "parameter": "bod",
+      "blank_as_reported": 47,
+      "censored": 24,
+      "missing_as_reported": 29,
+      "no_data_as_reported": 18,
+      "reported_numeric": 1619,
+      "unreadable_source": 0,
+      "reviewed_cells": 1737
+    },
+    {
+      "parameter": "dissolved_oxygen",
+      "blank_as_reported": 32,
+      "censored": 0,
+      "missing_as_reported": 2,
+      "no_data_as_reported": 18,
+      "reported_numeric": 1765,
+      "unreadable_source": 1,
+      "reviewed_cells": 1818
+    }
+  ],
+  "same_month_bod_do_pearson_r": 0.26295974111080717,
+  "matched_bod_do_station_months": 1618,
+  "training_examples": 1430,
+  "do_only_examples": 1558,
+  "split_summary": [
+    {
+      "proposed_split": "train",
+      "examples": 819,
+      "first_target_month": "2013-04",
+      "last_target_month": "2022-12",
+      "stations": 15
+    },
+    {
+      "proposed_split": "validation",
+      "examples": 176,
+      "first_target_month": "2023-01",
+      "last_target_month": "2023-12",
+      "stations": 15
+    },
+    {
+      "proposed_split": "test",
+      "examples": 435,
+      "first_target_month": "2024-01",
+      "last_target_month": "2026-06",
+      "stations": 16
+    }
+  ],
+  "annual_core_do": [
+    {
+      "scope": "historical_nine_stations",
+      "year": 2013,
+      "parameter": "dissolved_oxygen",
+      "n": 108,
+      "stations": 9,
+      "mean": 7.980555555555555,
+      "median": 8.0,
+      "min": 5.5,
+      "max": 11.8,
+      "fraction_integer_valued": 0.25,
+      "partial_year": false
+    },
+    {
+      "scope": "historical_nine_stations",
+      "year": 2014,
+      "parameter": "dissolved_oxygen",
+      "n": 81,
+      "stations": 9,
+      "mean": 8.330246913580247,
+      "median": 8.4,
+      "min": 5.4,
+      "max": 12.7,
+      "fraction_integer_valued": 0.04938271604938271,
+      "partial_year": false
+    },
+    {
+      "scope": "historical_nine_stations",
+      "year": 2015,
+      "parameter": "dissolved_oxygen",
+      "n": 108,
+      "stations": 9,
+      "mean": 8.52222222222222,
+      "median": 8.350000000000001,
+      "min": 5.3,
+      "max": 18.3,
+      "fraction_integer_valued": 0.1111111111111111,
+      "partial_year": false
+    },
+    {
+      "scope": "historical_nine_stations",
+      "year": 2016,
+      "parameter": "dissolved_oxygen",
+      "n": 108,
+      "stations": 9,
+      "mean": 8.092592592592593,
+      "median": 7.8,
+      "min": 4.0,
+      "max": 15.9,
+      "fraction_integer_valued": 0.05555555555555555,
+      "partial_year": false
+    },
+    {
+      "scope": "historical_nine_stations",
+      "year": 2017,
+      "parameter": "dissolved_oxygen",
+      "n": 108,
+      "stations": 9,
+      "mean": 8.318518518518518,
+      "median": 8.05,
+      "min": 5.5,
+      "max": 17.2,
+      "fraction_integer_valued": 0.07407407407407407,
+      "partial_year": false
+    },
+    {
+      "scope": "historical_nine_stations",
+      "year": 2018,
+      "parameter": "dissolved_oxygen",
+      "n": 107,
+      "stations": 9,
+      "mean": 8.361682242990653,
+      "median": 8.2,
+      "min": 5.6,
+      "max": 16.1,
+      "fraction_integer_valued": 0.07476635514018691,
+      "partial_year": false
+    },
+    {
+      "scope": "historical_nine_stations",
+      "year": 2019,
+      "parameter": "dissolved_oxygen",
+      "n": 108,
+      "stations": 9,
+      "mean": 7.811111111111111,
+      "median": 7.6,
+      "min": 4.5,
+      "max": 12.8,
+      "fraction_integer_valued": 0.07407407407407407,
+      "partial_year": false
+    },
+    {
+      "scope": "historical_nine_stations",
+      "year": 2020,
+      "parameter": "dissolved_oxygen",
+      "n": 63,
+      "stations": 9,
+      "mean": 7.742857142857143,
+      "median": 7.7,
+      "min": 5.6,
+      "max": 11.8,
+      "fraction_integer_valued": 0.047619047619047616,
+      "partial_year": false
+    },
+    {
+      "scope": "historical_nine_stations",
+      "year": 2021,
+      "parameter": "dissolved_oxygen",
+      "n": 98,
+      "stations": 9,
+      "mean": 7.812244897959185,
+      "median": 7.7,
+      "min": 5.4,
+      "max": 11.9,
+      "fraction_integer_valued": 0.09183673469387756,
+      "partial_year": false
+    },
+    {
+      "scope": "historical_nine_stations",
+      "year": 2022,
+      "parameter": "dissolved_oxygen",
+      "n": 98,
+      "stations": 9,
+      "mean": 7.670408163265305,
+      "median": 7.6,
+      "min": 5.4,
+      "max": 11.0,
+      "fraction_integer_valued": 0.08163265306122448,
+      "partial_year": false
+    },
+    {
+      "scope": "historical_nine_stations",
+      "year": 2023,
+      "parameter": "dissolved_oxygen",
+      "n": 108,
+      "stations": 9,
+      "mean": 7.5055555555555555,
+      "median": 7.6,
+      "min": 6.0,
+      "max": 9.1,
+      "fraction_integer_valued": 0.2777777777777778,
+      "partial_year": false
+    },
+    {
+      "scope": "historical_nine_stations",
+      "year": 2024,
+      "parameter": "dissolved_oxygen",
+      "n": 107,
+      "stations": 9,
+      "mean": 7.469158878504674,
+      "median": 7.8,
+      "min": 5.0,
+      "max": 12.5,
+      "fraction_integer_valued": 0.8691588785046729,
+      "partial_year": false
+    },
+    {
+      "scope": "historical_nine_stations",
+      "year": 2025,
+      "parameter": "dissolved_oxygen",
+      "n": 108,
+      "stations": 9,
+      "mean": 7.305555555555555,
+      "median": 7.0,
+      "min": 4.0,
+      "max": 10.0,
+      "fraction_integer_valued": 1.0,
+      "partial_year": false
+    },
+    {
+      "scope": "historical_nine_stations",
+      "year": 2026,
+      "parameter": "dissolved_oxygen",
+      "n": 54,
+      "stations": 9,
+      "mean": 7.851851851851852,
+      "median": 8.0,
+      "min": 7.0,
+      "max": 10.0,
+      "fraction_integer_valued": 1.0,
+      "partial_year": true
+    }
+  ],
+  "do_below_5_cells": 3,
+  "do_below_5_stations": [
+    "L_XV"
+  ]
+}

@@ -1,0 +1,13 @@
+{
+    "path": "~/Finals",
+    "sortOrder": [
+        {
+            "columnIndex": 1,
+            "ascending": true
+        },
+        {
+            "columnIndex": 2,
+            "ascending": true
+        }
+    ]
+}

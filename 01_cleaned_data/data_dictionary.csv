@@ -1,0 +1,25 @@
+﻿field,definition
+record_id,"Stable ID for the reviewed source cell, distinct from the earlier OCR extraction ID."
+station_id,Reported lake monitoring station identity. No lake zone or coordinate is inferred.
+station_name,Standardized station name. Historical relocation and exact coordinates are not established.
+waterbody_type,Lake. Tributary observations are excluded from this release.
+observation_month,Reported month in YYYY-MM form. Not a precise sample date or release date.
+date_precision,Month only.
+parameter,"bod or dissolved_oxygen. These are measurements, not fish-kill labels."
+unit,mg/L as reported for BOD and dissolved oxygen.
+raw_value,Source token. Empty for a visibly blank source cell; ND encodes gray no-data cells as defined by the source legend; ? marks an unreadable digit. See value_status.
+numeric_value,"Exact numeric value only. Missing, censored and unreadable observations remain blank."
+qualifier,"= for an exact value, < for a left-censored source value. Empty when unavailable."
+censoring_bound,Reported limit for a censored observation. Not an exact measurement.
+value_status,"reported_numeric, censored, missing_as_reported, blank_as_reported, no_data_as_reported or unreadable_source."
+missing_or_review_reason,Specific source note or review reason where available. An empty reason does not establish a cause.
+source_file,Original PDF filename in data/raw/llda_reports_2026-11-02.
+source_page,"One-based PDF page number, not a printed page label."
+source_table,Descriptive locator for the lake table containing the parameter.
+source_data_row,"One-based station row within that source lake table, excluding header rows. Not the OCR grid row."
+source_month_column,Month abbreviation in the source parameter group.
+review_status,source_visually_checked or unreadable_source_excluded. No independent second human review is claimed.
+verification_date,"Date the source was reviewed, not the sample or publication date."
+sample_datetime,Unavailable; intentionally blank.
+available_at,Actual publication or operational availability timestamp is unavailable; intentionally blank.
+numeric_analysis_eligible,True only for an exact value read from the source. This does not imply that a thesis target or train/test design is finalized.

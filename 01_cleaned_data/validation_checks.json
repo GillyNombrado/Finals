@@ -1,0 +1,19 @@
+{
+  "checks_passed": [
+    "52 quarterly reports represented in reviewed lake scope",
+    "3555 reviewed cells reconcile with 3384 exact numeric cells and 171 non-exact cells",
+    "Unique record IDs and station-month-parameter keys",
+    "Missing, censored and unreadable values cannot enter exact numeric analysis",
+    "16-station 162-month calendar has unique keys",
+    "All candidate input-target pairs are truly adjacent months",
+    "Unavailable source quarters are not invented",
+    "Conflicting 2014 appendix excluded",
+    "Actual sample and release timestamps not invented",
+    "56 source PDF hashes unchanged",
+    "67 project items moved and destination file hashes verified",
+    "11 reference tables retain all 186 rows"
+  ],
+  "numeric_scope": "Lake BOD/DO only",
+  "r_execution": "Not run: Rscript was not found in PATH or C:/Program Files/R",
+  "review_limitation": "One ambiguous source digit excluded; no independent second human transcription audit"
+}

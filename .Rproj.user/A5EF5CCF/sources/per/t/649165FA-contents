@@ -1,0 +1,376 @@
+---
+title: "EcoFlow-Optima: Preliminary Data Analysis"
+subtitle: "Water Quality, Lake Level and Low-Dissolved-Oxygen Risk in Laguna de Bay"
+author: "Nepumoceno, F. C.; Nombrado, G. T. G.; Sto Domingo, E. V. A."
+date: "`r format(Sys.Date(), '%B %d, %Y')`"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    number_sections: true
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, fig.width = 8, fig.height = 4.5)
+```
+
+# How to rerun this analysis
+
+1. Keep this file **inside the `Finals` project folder** (the one containing `01_cleaned_data`, `02_training_candidate`, `04_reference_tables`).
+2. Open `Finals.Rproj` in RStudio, then open this file.
+3. Install packages once: `install.packages(c("tidyverse", "randomForest", "rmarkdown", "knitr"))`
+4. Click **Knit** (or run chunks one by one with Ctrl+Enter).
+
+Data used: `01_cleaned_data`, `02_training_candidate`, `04_reference_tables`.
+**Not used:** `08_unverified_extraction_archive` (marked DO NOT TRAIN).
+
+# Setup and data import
+
+```{r packages}
+library(tidyverse)
+library(randomForest)
+set.seed(123)
+
+lake    <- read_csv("01_cleaned_data/lake_numeric_analysis.csv", show_col_types = FALSE)
+train   <- read_csv("02_training_candidate/train.csv",      show_col_types = FALSE)
+valid   <- read_csv("02_training_candidate/validation.csv", show_col_types = FALSE)
+test    <- read_csv("02_training_candidate/test.csv",       show_col_types = FALSE)
+monthly <- read_csv("04_reference_tables/lake_monthly.csv", show_col_types = FALSE)
+fishkill<- read_csv("04_reference_tables/fish_kill_events.csv", show_col_types = FALSE)
+floods  <- read_csv("04_reference_tables/bay_flood_history.csv", show_col_types = FALSE)
+gates   <- read_csv("04_reference_tables/gate_operating_rules.csv", show_col_types = FALSE)
+```
+
+Check what parameters exist:
+
+```{r params}
+lake %>% count(parameter, unit, sort = TRUE)
+lake %>% count(value_status, sort = TRUE)
+lake %>% count(numeric_analysis_eligible)
+```
+
+# Data cleaning and transformation
+
+```{r clean}
+# Keep rows that are eligible and have a numeric value
+lake_clean <- lake
+if (any(lake_clean$numeric_analysis_eligible %in% TRUE)) {
+  lake_clean <- lake_clean %>% filter(numeric_analysis_eligible %in% TRUE)
+}
+lake_clean <- lake_clean %>%
+  filter(!is.na(numeric_value)) %>%
+  mutate(
+    date = as.Date(paste0(observation_month, "-01")),
+    year = as.integer(format(date, "%Y")),
+    month = as.integer(format(date, "%m")),
+    param = case_when(
+      grepl("oxygen|\\bdo\\b", tolower(parameter)) ~ "DO",
+      grepl("bod|biochemical", tolower(parameter)) ~ "BOD",
+      TRUE ~ "Other"
+    )
+  ) %>%
+  filter(param %in% c("DO", "BOD"))
+
+cat("Rows kept:", nrow(lake_clean), "of", nrow(lake), "\n")
+lake_clean %>% count(param, station_id)
+
+# Monthly lake data: parse date
+monthly <- monthly %>%
+  mutate(date = as.Date(paste0(observation_month, "-01")))
+
+# Event tables: extract a start month where it is a clean date
+fishkill <- fishkill %>%
+  mutate(start_date = suppressWarnings(as.Date(paste0(substr(onset_or_period_start, 1, 7), "-01"))))
+floods <- floods %>%
+  mutate(start_date = suppressWarnings(as.Date(paste0(substr(event_date_or_period, 1, 7), "-01"))))
+
+# Early-warning screening level (above the 5 mg/L standard) so enough low-DO months exist to evaluate
+DO_LIMIT <- 6.5
+```
+
+# Summary statistics
+
+```{r summary}
+summ <- function(x) tibble(
+  n = sum(!is.na(x)), mean = mean(x, na.rm = TRUE), median = median(x, na.rm = TRUE),
+  sd = sd(x, na.rm = TRUE), min = min(x, na.rm = TRUE), max = max(x, na.rm = TRUE))
+
+# Overall by parameter
+lake_clean %>% group_by(param) %>% summarise(summ(numeric_value), .groups = "drop")
+
+# By station
+station_summary <- lake_clean %>%
+  group_by(param, station_id, station_name) %>%
+  summarise(summ(numeric_value), .groups = "drop")
+station_summary
+
+# Share of DO readings below the screening level, per station
+low_do_station <- lake_clean %>%
+  filter(param == "DO") %>%
+  group_by(station_id, station_name) %>%
+  summarise(n = n(), mean_DO = mean(numeric_value),
+            pct_below_limit = 100 * mean(numeric_value < DO_LIMIT), .groups = "drop") %>%
+  arrange(desc(pct_below_limit))
+low_do_station
+
+# Readings below the 5 mg/L water-quality standard, per station
+lake_clean %>%
+  filter(param == "DO") %>%
+  group_by(station_id) %>%
+  summarise(n = n(), below_5 = sum(numeric_value < 5), pct_below_5 = 100 * mean(numeric_value < 5), .groups = "drop") %>%
+  arrange(desc(pct_below_5))
+
+# Lake level and rainfall
+monthly %>% summarise(summ(lake_level_mean_m)) %>% mutate(variable = "lake_level_mean_m")
+monthly %>% summarise(summ(rainfall_basin_average_mm)) %>% mutate(variable = "rainfall_basin_average_mm")
+
+# Event counts
+cat("Fish-kill events on record:", nrow(fishkill), "\n")
+cat("Flood events on record:", nrow(floods), "\n")
+```
+
+# Visualizations
+
+## Chart 1: Lake level and rainfall with flood events (RQ1)
+
+```{r plot1}
+flood_in_range <- floods %>%
+  filter(!is.na(start_date), start_date >= min(monthly$date), start_date <= max(monthly$date))
+
+ggplot(monthly, aes(date, lake_level_mean_m)) +
+  geom_line(color = "steelblue", linewidth = 1) +
+  geom_vline(data = flood_in_range, aes(xintercept = start_date), linetype = "dashed", color = "red") +
+  labs(title = "Mean lake level over time (red dashed = recorded flood event)",
+       x = "Month", y = "Lake level (m)") +
+  theme_minimal()
+
+ggplot(monthly, aes(date, rainfall_basin_average_mm)) +
+  geom_col(fill = "darkgreen") +
+  labs(title = "Basin average rainfall by month", x = "Month", y = "Rainfall (mm)") +
+  theme_minimal()
+```
+
+## Chart 2: Dissolved oxygen over time by station (RQ2, RQ3)
+
+```{r plot2}
+lake_clean %>%
+  filter(param == "DO") %>%
+  ggplot(aes(date, numeric_value, color = station_id)) +
+  geom_line(alpha = 0.7) +
+  geom_hline(yintercept = DO_LIMIT, linetype = "dashed", color = "red") +
+  labs(title = paste0("Dissolved oxygen by station (red = ", DO_LIMIT, " mg/L screening level)"),
+       x = "Month", y = "DO (mg/L)", color = "Station") +
+  theme_minimal()
+```
+
+## Chart 3: Seasonal pattern of DO (RQ3)
+
+```{r plot3}
+lake_clean %>%
+  filter(param == "DO") %>%
+  ggplot(aes(factor(month), numeric_value)) +
+  geom_boxplot(fill = "lightblue") +
+  geom_hline(yintercept = DO_LIMIT, linetype = "dashed", color = "red") +
+  labs(title = "DO by calendar month", x = "Month", y = "DO (mg/L)") +
+  theme_minimal()
+```
+
+## Chart 4: Stations ranked by share of low-DO readings (RQ2)
+
+```{r plot4}
+ggplot(low_do_station, aes(reorder(station_id, pct_below_limit), pct_below_limit)) +
+  geom_col(fill = "orange") + coord_flip() +
+  labs(title = paste0("Percent of readings below ", DO_LIMIT, " mg/L by station"),
+       x = "Station", y = "% below screening level") +
+  theme_minimal()
+```
+
+# Main statistical analysis
+
+## RQ1: Lake level, rainfall and gate rules
+
+```{r rq1}
+m <- monthly %>% filter(!is.na(lake_level_mean_m), !is.na(rainfall_basin_average_mm)) %>%
+  arrange(date) %>%
+  mutate(rain_lag1 = lag(rainfall_basin_average_mm), level_change = lake_level_mean_m - lag(lake_level_mean_m))
+
+cor.test(m$lake_level_mean_m, m$rainfall_basin_average_mm)
+cor.test(m$lake_level_mean_m, m$rain_lag1)
+
+summary(lm(level_change ~ rainfall_basin_average_mm + rain_lag1, data = m))
+
+# Gate operating rules (reference table, shown for context)
+gates %>% select(control_id, structure, regime_type, stage_or_condition, threshold_m, gates_total_open)
+```
+
+## RQ2: Which stations are at higher risk (crowding proxy)
+
+No stocking or fish-pen data is in the cleaned folders, so RQ2 is answered with water-quality risk per station.
+
+```{r rq2}
+risk_table <- low_do_station %>% mutate(risk_class = case_when(
+  pct_below_limit >= 15 ~ "High", pct_below_limit >= 5 ~ "Moderate", TRUE ~ "Low"))
+
+# All 16 stations in one table (easy to screenshot)
+knitr::kable(risk_table, digits = 2,
+             caption = "Stations ranked by share of DO readings below the 6.5 mg/L screening level")
+
+# Paired BOD vs DO correlation
+paired <- lake_clean %>%
+  select(station_id, date, param, numeric_value) %>%
+  group_by(station_id, date, param) %>% summarise(v = mean(numeric_value), .groups = "drop") %>%
+  pivot_wider(names_from = param, values_from = v) %>% drop_na(DO, BOD)
+cor.test(paired$DO, paired$BOD)
+```
+
+## RQ3: Predicting next-month dissolved oxygen (risk of low DO)
+
+Train on `train`, check on `validation`, final score on `test` (time-ordered splits from your files).
+
+```{r rq3-prep}
+feats <- c("do_t_mg_l", "do_t_minus_1_mg_l", "do_t_minus_2_mg_l", "bod_t_mg_l",
+           "target_month_sin", "target_month_cos")
+target <- "target_do_next_month_mg_l"
+
+prep <- function(d) d %>% select(all_of(c(feats, target))) %>% drop_na()
+tr <- prep(train); va <- prep(valid); te <- prep(test)
+
+cat("Train:", nrow(tr), " Validation:", nrow(va), " Test:", nrow(te), "\n")
+cat("Date ranges (target month):\n")
+bind_rows(train = range(train$target_month), validation = range(valid$target_month),
+          test = range(test$target_month)) %>% print()
+```
+
+```{r rq3-models}
+metrics <- function(actual, pred) tibble(
+  RMSE = sqrt(mean((actual - pred)^2)), MAE = mean(abs(actual - pred)),
+  R2 = 1 - sum((actual - pred)^2) / sum((actual - mean(actual))^2))
+
+# Baseline: next month = this month
+base_pred <- te$do_t_mg_l
+# Linear regression
+lm_fit <- lm(as.formula(paste(target, "~ .")), data = tr)
+lm_pred <- predict(lm_fit, te)
+# Random forest
+rf_fit <- randomForest(as.formula(paste(target, "~ .")), data = tr, ntree = 500)
+rf_pred <- predict(rf_fit, te)
+
+# Test set results
+results <- bind_rows(
+  Baseline_persistence = metrics(te[[target]], base_pred),
+  Linear_regression    = metrics(te[[target]], lm_pred),
+  Random_forest        = metrics(te[[target]], rf_pred),
+  .id = "model")
+knitr::kable(results, digits = 3, caption = "Table 1a. Test set (January 2024 to June 2026)")
+
+# Validation set results
+val_results <- bind_rows(
+  Baseline_persistence = metrics(va[[target]], va$do_t_mg_l),
+  Linear_regression    = metrics(va[[target]], predict(lm_fit, va)),
+  Random_forest        = metrics(va[[target]], predict(rf_fit, va)),
+  .id = "model")
+knitr::kable(val_results, digits = 3, caption = "Table 1b. Validation set (2023)")
+
+summary(lm_fit)
+importance(rf_fit)
+
+# Range of random forest predictions on the test set
+range(rf_pred)
+range(te[[target]])
+```
+
+```{r rq3-plot}
+tibble(actual = te[[target]], predicted = rf_pred) %>%
+  ggplot(aes(actual, predicted)) +
+  geom_point(alpha = 0.5) + geom_abline(color = "red") +
+  labs(title = "Random forest: actual vs predicted next-month DO (test set)",
+       x = "Actual DO (mg/L)", y = "Predicted DO (mg/L)") +
+  theme_minimal()
+```
+
+### How many low-DO months at different thresholds?
+
+```{r thresholds}
+for (thr in c(5, 5.5, 6, 6.5)) {
+  cat("Threshold", thr, "| train:", sum(tr[[target]] < thr),
+      "| validation:", sum(va[[target]] < thr),
+      "| test:", sum(te[[target]] < thr), "\n")
+}
+```
+
+### Low-DO warning check
+
+```{r rq3-class}
+actual_low <- te[[target]] < DO_LIMIT
+cat("Low-DO months in test set:", sum(actual_low), "of", length(actual_low), "\n")
+
+warn_eval <- function(pred) {
+  pred_low <- pred < DO_LIMIT
+  tp <- sum(pred_low & actual_low); fp <- sum(pred_low & !actual_low)
+  fn <- sum(!pred_low & actual_low); tn <- sum(!pred_low & !actual_low)
+  tibble(TP = tp, FP = fp, FN = fn, TN = tn,
+         precision = ifelse(tp + fp > 0, tp / (tp + fp), NA),
+         recall = ifelse(tp + fn > 0, tp / (tp + fn), NA))
+}
+warn_table <- bind_rows(Baseline = warn_eval(base_pred), Linear = warn_eval(lm_pred),
+                        Random_forest = warn_eval(rf_pred), .id = "model")
+knitr::kable(warn_table, digits = 3,
+             caption = "Table 2. Early-warning check at the 6.5 mg/L screening level (test set)")
+
+# Save test-set predictions for submission
+dir.create("outputs", showWarnings = FALSE)
+test_predictions <- tibble(
+  actual_next_month_DO = te[[target]],
+  baseline = base_pred,
+  linear_regression = lm_pred,
+  random_forest = rf_pred
+)
+write_csv(test_predictions, "outputs/test_predictions.csv")
+write_csv(results, "outputs/model_results_test.csv")
+write_csv(warn_table, "outputs/early_warning_check.csv")
+```
+
+# Checking calculations
+
+```{r checks}
+# 1. Recompute one summary by hand
+lake_clean %>% filter(param == "DO") %>% summarise(mean = mean(numeric_value), n = n())
+# 2. No impossible values
+lake_clean %>% group_by(param) %>% summarise(negatives = sum(numeric_value < 0))
+# 3. No date leakage: every target month is after its origin month
+all(train$target_month > train$origin_month)
+# 4. Train dates come before test dates
+max(train$target_month) < min(test$target_month)
+```
+
+# Preliminary interpretation
+
+- **RQ1:** Same-month rainfall was weakly and not significantly correlated with lake level (r = 0.25, p = 0.139, n = 36), but the previous month's rainfall was moderately correlated (r = 0.51, p = 0.002). In a regression on the monthly change in lake level, lagged rainfall was significant (0.00078 m per mm, p = 0.002) while same-month rainfall was not, and the model explained about 33% of the variation (adjusted R² = 0.28). Lake level appears to respond to rainfall with roughly a one-month delay. Both recorded floods (October 2022 and October 2024) fall near the seasonal peak of the lake level. The gate rules are river-stage thresholds, so they could not be tested against lake level.
+- **RQ2:** Against the 5 mg/L water-quality standard, almost no readings were low (only San Pedro, L_XV, had a few). Using the 6.5 mg/L early-warning screening level, the stations with the highest share of low readings were `r paste0(low_do_station$station_id[1:3], " (", round(low_do_station$pct_below_limit[1:3], 1), "%)", collapse = ", ")`. DO and BOD had a weak positive correlation (r = 0.26, p < 0.001), which does not fit a simple organic-pollution explanation and may reflect algal productivity, though this cannot be confirmed here. Stations with far fewer readings (L_XX, L_XIX, L_XXI and L_XIII with about 63 to 64 each, and L_XXIV with 18) should be interpreted with care, because small samples and whole-number rounding can inflate the share of readings below the screening level.
+- **RQ3:** On the test set (435 station-months, January 2024 to June 2026), none of the models predicted next-month DO better than the test average (R² of -0.41 for the baseline, -0.24 for linear regression, -0.33 for random forest). Linear regression had the lowest RMSE (1.07) while the baseline had the lowest MAE (0.76). Current DO and time of year were the only significant predictors. Random forest predictions stayed within a narrow band of about 6.4 to 10.3 mg/L even though actual DO ranged from 4 to 13 mg/L. For the 6.5 mg/L warning, 69 of 435 test months were low. The baseline caught 23 of them (recall 0.33, precision 0.34), linear regression caught none, and random forest caught 1 (recall 0.01). Monthly data alone is therefore not enough for a reliable early-warning model.
+
+# Limitations
+
+- Only 9 fish-kill events and 5 flood events are on record, mostly outside the 2013 to 2026 water-quality period, so fish-kill prediction cannot be validated statistically. Low DO is used as a proxy.
+- No stocking density, fish pen count or zone coordinates were available, so crowding (RQ2) is approximated by station water quality.
+- Monthly values hide short low-oxygen episodes that actually cause fish kills.
+- Gate rules are river-stage thresholds, and no gate-operation time series was provided, so gate recommendations cannot be modelled from this data.
+- Correlation does not prove causation.
+- Unverified extractions (`08_unverified_extraction_archive`) were excluded on purpose.
+- Readings below the 5 mg/L standard were almost absent, so a 6.5 mg/L screening level was used to evaluate the warning model; this is a modelling choice, not a regulatory limit.
+- Recent DO readings appear rounded to whole numbers, so values such as 6 mg/L fall below the screening level and may inflate the flagged months.
+- Rainfall data covers only 36 of 60 months (none for 2020 to 2021).
+- Several stations have far fewer readings than others (L_XXIV has 18; L_XIII, L_XIX, L_XX, L_XXI, L_XXII and L_XXIII have about 63 to 64), so their rankings are less reliable.
+
+# Data sources
+
+LLDA reports and the cleaned reference tables in `04_reference_tables/sources.csv`. Cite the original LLDA documents listed there in the final report.
+
+# Session information
+
+```{r session}
+sessionInfo()
+# Saves a copy to your Finals folder for the rerun instructions
+writeLines(capture.output(sessionInfo()), "session_info.txt")
+```

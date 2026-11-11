@@ -1,0 +1,25 @@
+{
+  "release": "llda_lake_bod_do_v1",
+  "reviewed_reports": 52,
+  "stations": 16,
+  "period_start": "2013-01",
+  "period_end": "2026-06",
+  "reviewed_cells": 3555,
+  "exact_numeric_cells": 3384,
+  "censored_cells": 24,
+  "missing_cells": 146,
+  "unreadable_cells": 1,
+  "numeric_station_month_rows": 1766,
+  "candidate_adjacent_do_pairs": 1696,
+  "corrected_or_recovered_cells": 2768,
+  "status_counts": {
+    "reported_numeric": 3384,
+    "missing_as_reported": 31,
+    "unreadable_source": 1,
+    "no_data_as_reported": 36,
+    "blank_as_reported": 79,
+    "censored": 24
+  },
+  "scope": "Lake BOD/DO only. Broader archive is not fully visually validated.",
+  "training_status": "Clean inputs available for exploratory monthly forecasting experiments; thesis target, availability timing, splits and leakage controls must be specified before training."
+}
